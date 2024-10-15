@@ -1,0 +1,13 @@
+Extracting features pipeline for Praat and openSMILE features
+By Loes van Bemmel (loes.vanbemmel@ru.nl)
+
+Assuming all data is Force Aligned
+(Refer to the FA manual for further info on this)
+
+1. LabeledSegmentAnalysis_v3.praat
+2. extract_results.py or organizing_PraatFeatures.py (for the latter, make sure your input files are utf-8 encoded!)
+   --> outlierdetection?
+3. ExtractingFeatures_openSMILE.py
+4. combining_praat_gemaps.py
+5. getrankedfeatures.py (in Pipeline/Scripts/)
+

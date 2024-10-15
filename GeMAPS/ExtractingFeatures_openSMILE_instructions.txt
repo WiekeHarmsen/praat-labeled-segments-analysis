@@ -1,0 +1,66 @@
+Extracting features with ExtractingFeatures_openSMILE.ipynb
+By Loes van Bemmel (l.vanbemmel@student.ru.nl)
+
+Input:
+	.wav files in the chosen input directory
+	TextGrid files (.tg, .Textgrid, .TextGrid, etc.)
+
+Output:
+	files in the .arff format in the chosen output directory
+	One excel .xlsx file with all the features 
+
+
+1. Go to your personal directory (either in Ponyland (recommended!) or on your own machine)
+	For example: my directory is /vol/tensusers2/lvbemmel on Ponyland
+
+2. Download and Install the openSMILE toolkit. 
+	https://www.audeering.com/opensmile/ and 
+	https://audeering.github.io/opensmile/get-started.html
+	are very useful in this process.
+	In the second link, follow the instructions below 'Compiling on Linux/Mac':
+	a) command: git clone https://github.com/audeering/opensmile.git
+	b) command: cd opensmile/
+	c) command: bash build.sh
+	d) Then add the 'build/progsrc/smilextract' directory to you path with 
+		the command: export PATH=$PATH:/[fill_in_own_directory]/opensmile/build/progsrc/smilextract
+	
+3. Open ExtractingFeatures_openSMILE.py 
+4. Change the directories to match your own.
+	Currently, it is expected that the .py file is in the directory above your openSMILE installation.
+	However, feel free to change directories.
+	The indir, outdir and opensmile dir can all be changed freely.
+5. Choose which tier you want to use.
+	'word' will use the word-aligned tier
+	'phoneme' will use the phoneme-aligned tier 
+	'full' will use the standard openSMILE configuration that averages over the entire audiofile
+6. Add the 'dataname' for the resulting Excel file.
+7. Add the extensions that the Textgrids use.
+	Since each TextGrid seems to have their own names, the option to use multiple extensions was added.
+	For example, _annotated.tg will take any file that ends with "_annotated.tg".
+	Feel free to change .tg to .TextGrid or anything else, as long as it aligns with the TextGrid files in the textgriddir.
+	Currently, if the corresponding textgrid does not exist, the entire audio file is skipped.
+8. Choose which configuration of openSMILE you want to use.
+	Currently the configuration is eGeMAPS.
+	Other configurations can be found in the /config/ openSMILE directory.
+	Please also add a string featureset to identify which configuration is chosen.
+9.  Run it using "python3 ExtractingFeatures_openSMILE.py" 
+10. Done! You can check the output results in your chosen output directory.
+	
+
+11.a If you want a different resultname than 
+	(original .wav file name)_openSMILE_(featureset)_results
+You could change the string "resultname" on line 121 in createFeatures
+
+11.b Similarly, if you want the resulting Excel file to have a different name than
+	(featureset)_(tier)level_(dataname).xlsx
+You can change the string "output_name" at the very end.
+
+Please note that file[0:-4] is sliced like that to avoid adding ".wav" in the middle of your result file.
+
+
+GENERAL NOTES:
+	Please make sure to add "/" at the end of the directory strings. 
+	Please ensure that each file in the inputdir also has a textgrid in the textgriddir with the same name(+extension). Otherwise, the audiofile will be skipped.
+	You might have to install some packages using pip. This should not be a problem on Ponyland, although you might have to use pip3.
+        Same with running the .py file: you might have to use python3.
+	If a TypeError: ''generator' object is not subscriptable' occurs, try 'pip install liac-arff'. (It might be necessary to first uninstall the arff package.)
